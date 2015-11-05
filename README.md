@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Yii 2 Basic Project Template
 ============================
 
@@ -99,3 +100,7 @@ return [
 **NOTE:** Yii won't create the database for you, this has to be done manually before you can access it.
 
 Also check and edit the other files in the `config/` directory to customize your application.
+=======
+# point-tracker
+A web application that helps in tracking point for games or group activities. Developed using Yii 2 Framework.
+>>>>>>> ed5ffa8e1bb9f4ba680d0286a7838c556546c949
