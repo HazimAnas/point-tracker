@@ -17,8 +17,8 @@ class m151112_151509_create_program_table extends Migration
                         'PRIMARY KEY (id)',
                       'name' => $this->string(100)->notNull(),
                       'description' => $this->string(256),
-                      'created_at' => $this->dateTime()->notNull(),
-                      'updated_at' => $this->dateTime()->notNull(),
+                      'created_at' => $this->int(11)->notNull(),
+                      'updated_at' => $this->int(11)->notNull(),
                   ], $tableOptions);
     }
 
