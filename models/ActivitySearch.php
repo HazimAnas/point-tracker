@@ -38,6 +38,35 @@ class ActivitySearch extends Activity
      *
      * @return ActiveDataProvider
      */
+    public function searchForProgram($params)
+    {
+        $query = Activity::find()->where(['program_id' => Yii::$app->getRequest()->getQueryParam('id')]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'id', $this->id])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'program_id', $this->program_id]);
+
+        return $dataProvider;
+    }
+
     public function search($params)
     {
         $query = Activity::find();

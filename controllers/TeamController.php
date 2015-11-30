@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Program;
-use app\models\ProgramSearch;
-use app\models\ActivitySearch;
+use app\models\Team;
+use app\models\TeamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProgramController implements the CRUD actions for Program model.
+ * TeamController implements the CRUD actions for Team model.
  */
-class ProgramController extends Controller
+class TeamController extends Controller
 {
     public function behaviors()
     {
@@ -28,12 +27,12 @@ class ProgramController extends Controller
     }
 
     /**
-     * Lists all Program models.
+     * Lists all Team models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProgramSearch();
+        $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,31 +42,25 @@ class ProgramController extends Controller
     }
 
     /**
-     * Displays a single Program model.
+     * Displays a single Team model.
      * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $session = Yii::$app->session;
-        $session->set('program_id', $id);
-        $searchModel = new ActivitySearch();
-        $dataProvider = $searchModel->searchForProgram(Yii::$app->request->queryParams);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'activitySearchModel' => $searchModel,
-            'activityDataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Creates a new Program model.
+     * Creates a new Team model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Program();
+        $model = new Team();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -79,7 +72,7 @@ class ProgramController extends Controller
     }
 
     /**
-     * Updates an existing Program model.
+     * Updates an existing Team model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -98,7 +91,7 @@ class ProgramController extends Controller
     }
 
     /**
-     * Deletes an existing Program model.
+     * Deletes an existing Team model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -111,15 +104,15 @@ class ProgramController extends Controller
     }
 
     /**
-     * Finds the Program model based on its primary key value.
+     * Finds the Team model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Program the loaded model
+     * @return Team the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Program::findOne($id)) !== null) {
+        if (($model = Team::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

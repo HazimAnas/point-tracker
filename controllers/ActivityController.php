@@ -61,13 +61,18 @@ class ActivityController extends Controller
     public function actionCreate()
     {
         $model = new Activity();
+        if(Yii::$app->session->has('program_id')) {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else {
+            throw new \yii\web\NotFoundHttpException();
         }
     }
 

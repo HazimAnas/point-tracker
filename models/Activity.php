@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
-
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "activity".
  *
@@ -40,6 +42,21 @@ class Activity extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors() {
+            
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    'value' => new Expression('NOW()'),
+                ],
+            ],
+        ];
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -53,6 +70,24 @@ class Activity extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $initial = '';
+
+            foreach (explode(' ', $this->name) as $word) {
+                $initial .= strtoupper($word[0]);
+            }
+
+            $this->id = $initial.rand(99, 9999);;
+            $this->program_id = Yii::$app->session->get('program_id');
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

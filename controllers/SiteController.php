@@ -50,6 +50,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+        $session = new Yii::$app->session;
+        $session->open();
     }
 
     public function actionLogin()
